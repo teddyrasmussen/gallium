@@ -1,2 +1,5 @@
 **/__pycache__/**
 **/config.json
+**/Lib/**
+**/Scripts/**
+**/pyvenv.cfg
