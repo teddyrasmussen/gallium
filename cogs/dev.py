@@ -294,7 +294,6 @@ class dev(commands.Cog):
 
             await msg.edit(embed=embed)
 
-
     # TODO: fix once the db works
     """    
     @commands.command()
