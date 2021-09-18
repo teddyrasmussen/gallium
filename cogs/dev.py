@@ -25,8 +25,8 @@ class dev(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        # mcl = MongoClient()
-        # self.trusted = mcl.Elevate.trusted
+        mcl = MongoClient()
+        self.trusted = mcl.Gallium.trusted
         self.footer = bot.footer
         self.color = bot.color
 
@@ -228,7 +228,7 @@ class dev(commands.Cog):
     @commands.is_owner()
     async def rn(self, ctx):
         await ctx.guild.me.edit(nick=None)
-        await ctx.send("Nickname reset to Elevate")
+        await ctx.send("Nickname reset to Gallium")
 
     @commands.is_owner()
     @commands.command(aliases=["la"])

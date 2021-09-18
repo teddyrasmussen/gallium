@@ -18,7 +18,7 @@ footer = str(data["FOOTER"])
 intents = discord.Intents.default()
 intents.members = True
 
-#mcl = MongoClient()
+mcl = MongoClient()
 
 log = logging.getLogger("gallium.core")
 logging.basicConfig(
@@ -48,7 +48,7 @@ class Gallium(commands.Bot):
         self.session = aiohttp.ClientSession()
         self.footer = footer
         self.color = color
-        # self.db = mcl.Gallium
+        self.db = mcl.Gallium
         self.supportathrids = []
         self.supportchnlids = []
         self.log = log
@@ -56,9 +56,7 @@ class Gallium(commands.Bot):
     def __str__():
         return "Gallium | Moderation, Alt Detection & more."
 
-    def get_pre(self, bot, message):
-        # TODO: uncomment this after i finish testing locally
-        """
+    def get_pre(self, bot, message):        
         prfx = self.db.prefixes
         if message.guild:
             doc = prfx.find_one({"_id": message.guild.id})
@@ -67,15 +65,12 @@ class Gallium(commands.Bot):
             else:
                 return prefixes
         else:
-        """
-        return prefixes
+            return prefixes
 
     async def on_ready(self):
         print(f"Logged in as {self.user}")
 
-    async def on_message_edit(
-        self, before: discord.Message, after: discord.Message
-    ):
+    async def on_message_edit(self, before: discord.Message, after: discord.Message):
         if after.author.id == self.owner_id:
             await self.process_commands(after)
 
