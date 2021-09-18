@@ -2,12 +2,15 @@ from discord.ext import commands, menus
 from .utils.paginator import RoboPages
 import discord
 import json
+from pymongo import MongoClient
 
 colorfile = "utils/tools.json"
 with open(colorfile) as f:
     data = json.load(f)
 color = int(data["COLORS"], 16)
 footer = str(data["FOOTER"])
+
+mcl = MongoClient()
 
 
 class Prefix(commands.Converter):
@@ -140,7 +143,9 @@ class PaginatedHelpCommand(commands.HelpCommand):
     def __init__(self):
         super().__init__(
             command_attrs={
-                "cooldown": commands.Cooldown(1, 3.0, commands.BucketType.member),
+                "cooldown": commands.CooldownMapping.from_cooldown(
+                    1, 3.0, commands.BucketType.member
+                ),
                 "help": "Shows help about the bot, a command, or a category",
             }
         )
