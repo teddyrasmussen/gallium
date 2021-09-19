@@ -8,6 +8,7 @@ import os
 import io
 from aiohttp_requests import requests
 from discord.ext import commands
+from discord.app import slash_command
 
 from jishaku.codeblocks import codeblock_converter
 
@@ -20,7 +21,7 @@ from typing import Union
 log = logging.getLogger("titanium.cog_loader")
 
 
-class dev(commands.Cog):
+class dev(discord.Cog):
     """Developer Commands"""
 
     def __init__(self, bot):
@@ -31,7 +32,7 @@ class dev(commands.Cog):
         self.color = bot.color
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def load(self, ctx, name: str):
         """Loads an extension. """
         try:
@@ -47,7 +48,7 @@ class dev(commands.Cog):
         await ctx.respond(f"📥 Loaded extension **cogs/{name}.py**")
 
     @commands.is_owner()
-    @commands.command(aliases=["r"])
+    @slash_command(aliases=["r"])
     async def reload(self, ctx, name: str):
         """Reloads an extension. """
 
@@ -65,7 +66,7 @@ class dev(commands.Cog):
             return await ctx.respond(f"https://hastebin.com/{re['key']}")
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def unload(self, ctx, name: str):
         """Unloads an extension. """
         try:
@@ -76,7 +77,7 @@ class dev(commands.Cog):
         await ctx.respond(f"📤 Unloaded extension **cogs/{name}.py**")
 
     @commands.is_owner()
-    @commands.command(aliases=["ra"])
+    @slash_command(aliases=["ra"])
     async def reloadall(self, ctx):
         """Reloads all extensions. """
         error_collection = []
@@ -108,7 +109,7 @@ class dev(commands.Cog):
         return await ctx.respond("Successfully reloaded all extensions")
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def leaveguild(self, ctx):
         """Leave the current server."""
         embed = discord.Embed(title="Goodbye", color=self.color)
@@ -118,7 +119,7 @@ class dev(commands.Cog):
         log.info(f"Left {ctx.guild}, ID: {ctx.guild.id} at owners request.")
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def status(self, ctx, type, *, status=None):
         """Change the Bot Status"""
         if type == "playing":
@@ -171,7 +172,7 @@ class dev(commands.Cog):
             )
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def dm(self, ctx, user: discord.Member, *, content):
         """Dm a Member"""
         embed = discord.Embed(color=self.color)
@@ -185,7 +186,7 @@ class dev(commands.Cog):
         await ctx.respond(f"<:comment:726779670514630667> Message sent to {user}")
 
     @commands.is_owner()
-    @commands.command(aliases=["ss"])
+    @slash_command(aliases=["ss"])
     async def screenshot(self, ctx, url):
         await ctx.respond("This is a slow API so it may take some time.")
         embed = discord.Embed(title=f"Screenshot of {url}", color=self.color)
@@ -202,20 +203,20 @@ class dev(commands.Cog):
             )
 
     @commands.is_owner()
-    @commands.command()
+    @slash_command()
     async def say(self, ctx, *, content: str):
         """Make the bot say something"""
         await ctx.respond(content)
 
     @commands.is_owner()
-    @commands.command(aliases=["e"])
+    @slash_command(aliases=["e"])
     async def eval(self, ctx, *, code: str):
         """Evaluate code"""
         cog = self.bot.get_cog("Jishaku")
         res = codeblock_converter(code)
         await cog.jsk_python(ctx, argument=res)
 
-    @commands.command()
+    @slash_command()
     @commands.is_owner()
     async def nick(self, ctx, *, name: str):
         try:
@@ -224,14 +225,14 @@ class dev(commands.Cog):
         except discord.HTTPException as err:
             await ctx.respond(f"```{err}```")
 
-    @commands.command()
+    @slash_command()
     @commands.is_owner()
     async def rn(self, ctx):
         await ctx.guild.me.edit(nick=None)
         await ctx.respond("Nickname reset to Gallium")
 
     @commands.is_owner()
-    @commands.command(aliases=["la"])
+    @slash_command(aliases=["la"])
     async def loadall(self, ctx):
         """Reloads all extensions. """
         error_collection = []
@@ -255,7 +256,7 @@ class dev(commands.Cog):
 
         await ctx.respond("Successfully reloaded all extensions")
 
-    @commands.command(aliases=["s"])
+    @slash_command(aliases=["s"])
     @commands.is_owner()
     async def sync(self, ctx):
         """Sync with GitHub and reload all the cogs"""
@@ -296,7 +297,7 @@ class dev(commands.Cog):
 
     # TODO: fix once the db works
     """    
-    @commands.command()
+    @slash_command()
         @commands.is_owner()
         async def addtrusted(
             self, ctx, user: Union[discord.User, discord.Member], reason=None
@@ -316,7 +317,7 @@ class dev(commands.Cog):
                 await ctx.respond("That user is now trusted!")
     
 
-    @commands.command()
+    @slash_command()
     @checks.is_trusted()
     async def trusted(self, ctx):
         await ctx.respond("You are trusted")

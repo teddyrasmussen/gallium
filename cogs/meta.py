@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.app import slash_command
 import platform
 import sys
 import psutil
@@ -8,7 +9,7 @@ import os
 import distro
 
 
-class Gallium(commands.Cog):
+class Gallium(discord.Cog):
     """Information about Gallium"""
 
     def __init__(self, bot):
@@ -16,7 +17,7 @@ class Gallium(commands.Cog):
         self.color = bot.color
         self.footer = bot.footer
 
-    @commands.command()
+    @slash_command()
     async def vote(self, ctx):
         """Vote for Gallium on top.gg"""
         embed = discord.Embed(
@@ -27,7 +28,7 @@ class Gallium(commands.Cog):
         embed.set_footer(text=self.footer)
         await ctx.respond(embed=embed)
 
-    @commands.command()
+    @slash_command()
     async def invite(self, ctx):
         """Get the invite for the bot."""
         emb = discord.Embed(
@@ -38,7 +39,7 @@ class Gallium(commands.Cog):
         emb.set_footer(text=self.footer)
         await ctx.respond(embed=emb)
 
-    @commands.command(aliases=["info"])
+    @slash_command(aliases=["info"])
     async def about(self, ctx):
         """Get info about Gallium"""
         emb = discord.Embed(
@@ -63,7 +64,7 @@ class Gallium(commands.Cog):
         emb.set_footer(text=self.footer)
         await ctx.respond(embed=emb)
 
-    @commands.command()
+    @slash_command()
     async def support(self, ctx):
         """Get support information."""
         supportembed = discord.Embed(title="Gallium support", color=self.color)
@@ -83,7 +84,7 @@ class Gallium(commands.Cog):
         supportembed.set_footer(text=f"Use {ctx.prefix}help or info for more")
         await ctx.respond(embed=supportembed)
 
-    @commands.command()
+    @slash_command()
     async def stats(self, ctx):
         """Get stats for Gallium"""
         dpy = discord.version_info
@@ -120,14 +121,14 @@ class Gallium(commands.Cog):
             )
         await ctx.respond(embed=embed)
 
-    @commands.command()
+    @slash_command()
     async def privacy(self, ctx):
         """Get my privacy policy"""
         await ctx.respond(
             "Gallium takes your privacy very seriously. We only store data that is necessary to the operation of Gallium, like user IDs, guild IDs, role IDs, and channel IDs. Gallium accesses more extensive data on users, roles, guilds, and channels when certain commands are run, but it is not stored.\nThe data Gallium collects is stored only on the secure, password- and private-key protected servers that Gallium is run on, and except for some command arguments, is never sent anywhere.\n If you have any questions, DM CraziiAce#0001 on Discord"
         )
 
-    @commands.command()
+    @slash_command()
     async def credits(self, ctx):
         """Get Gallium's credits"""
         emb = discord.Embed(
@@ -138,7 +139,7 @@ class Gallium(commands.Cog):
         emb.set_footer(text=self.footer)
         await ctx.respond(embed=emb)
 
-    @commands.command()
+    @slash_command()
     async def donate(self, ctx):
         """Donate to Gallium!"""
         emb = discord.Embed(
