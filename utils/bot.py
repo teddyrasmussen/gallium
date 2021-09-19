@@ -115,7 +115,7 @@ class Gallium(commands.Bot):
                 username=ctx.author.name,
                 avatar_url=ctx.author.avatar_url,
             )
-        await ctx.send("Message sent!")
+        await ctx.respond("Message sent!")
         self.supportathrids.append(ctx.author.id)
         self.supportchnlids.append(ctx.channel.id)
 
@@ -136,11 +136,11 @@ class Gallium(commands.Bot):
                 await channel.send(embed=emb)
                 self.supportathrids.remove(id)
                 self.supportchnlids.pop(self.supportathrids.index(id))
-        await ctx.send("📤 Message sent!")
+        await ctx.respond("📤 Message sent!")
 
     @commands.command(aliases=["shutdown"])
     @commands.is_owner()
     async def restart(self, ctx):
-        await ctx.send("👋 Bye!")
+        await ctx.respond("👋 Bye!")
         await self.close()
         log.info("Gallium exited with exit code 0 (intentional)")

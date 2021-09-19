@@ -25,7 +25,7 @@ class Gallium(commands.Cog):
             color=self.color,
         )
         embed.set_footer(text=self.footer)
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
     @commands.command()
     async def invite(self, ctx):
@@ -36,7 +36,7 @@ class Gallium(commands.Cog):
             color=self.color,
         )
         emb.set_footer(text=self.footer)
-        await ctx.send(embed=emb)
+        await ctx.respond(embed=emb)
 
     @commands.command(aliases=["info"])
     async def about(self, ctx):
@@ -61,7 +61,7 @@ class Gallium(commands.Cog):
             inline=False,
         )
         emb.set_footer(text=self.footer)
-        await ctx.send(embed=emb)
+        await ctx.respond(embed=emb)
 
     @commands.command()
     async def support(self, ctx):
@@ -81,7 +81,7 @@ class Gallium(commands.Cog):
             inline=False,
         )
         supportembed.set_footer(text=f"Use {ctx.prefix}help or info for more")
-        await ctx.send(embed=supportembed)
+        await ctx.respond(embed=supportembed)
 
     @commands.command()
     async def stats(self, ctx):
@@ -118,12 +118,12 @@ class Gallium(commands.Cog):
                 value=f"CPU current clockspeed: **{round(psutil.cpu_freq().current / 1000, 2)} GHz**\nCPU max clockspeed: **{round(psutil.cpu_freq().max / 1000, 2)} GHz**\nCPU usage: **{psutil.cpu_percent()}%\n**RAM:** {round(psutil.virtual_memory().total / 1000000)} MB\n**RAM usage:** {psutil.virtual_memory().percent}%**\nOperating system: **{platform.system()}**\nOS version: **{platform.platform()}**",
                 inline=False,
             )
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
     @commands.command()
     async def privacy(self, ctx):
         """Get my privacy policy"""
-        await ctx.send(
+        await ctx.respond(
             "Gallium takes your privacy very seriously. We only store data that is necessary to the operation of Gallium, like user IDs, guild IDs, role IDs, and channel IDs. Gallium accesses more extensive data on users, roles, guilds, and channels when certain commands are run, but it is not stored.\nThe data Gallium collects is stored only on the secure, password- and private-key protected servers that Gallium is run on, and except for some command arguments, is never sent anywhere.\n If you have any questions, DM CraziiAce#0001 on Discord"
         )
 
@@ -136,7 +136,7 @@ class Gallium(commands.Cog):
             color=self.color,
         )
         emb.set_footer(text=self.footer)
-        await ctx.send(embed=emb)
+        await ctx.respond(embed=emb)
 
     @commands.command()
     async def donate(self, ctx):
@@ -145,7 +145,7 @@ class Gallium(commands.Cog):
             title="Donate to Gallium! All donations are greatly appreciated.",
             url=f"https://donatebot.io/checkout/718663089318527016?buyer={ctx.author.id}",
         )
-        await ctx.send(embed=emb)
+        await ctx.respond(embed=emb)
 
 
 def setup(bot):

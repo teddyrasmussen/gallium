@@ -23,7 +23,7 @@ class config(commands.Cog):
         """Change Gallium's settings"""
         if not ctx.invoked_subcommand:
             emb = discord.Embed(title="Settings for Gallium", color=ctx.bot.color)
-            await ctx.send_help(ctx.command)
+            await ctx.respond_help(ctx.command)
 
     @settings.command()
     async def prefix(self, ctx, *, prefix: str = None):
@@ -32,26 +32,26 @@ class config(commands.Cog):
         if not doc:
             if prefix and not doc:
                 self.prfx.insert_one({"_id": ctx.guild.id, "prfx": prefix})
-                await ctx.send(f"Successfully set the server prefix to {prefix}")
+                await ctx.respond(f"Successfully set the server prefix to {prefix}")
                 return
             elif not prefix:
-                await ctx.send("You didn't specify a prefix!")
+                await ctx.respond("You didn't specify a prefix!")
                 return
         elif doc:
             if not prefix and not doc.get("prfx"):
-                await ctx.send("You didn't specify a prefix!")
+                await ctx.respond("You didn't specify a prefix!")
                 return
             elif not prefix and doc.get("prfx"):
                 self.prfx.update_one(
                     filter={"_id": ctx.guild.id}, update={"$unset": {"prfx": ""}}
                 )
-                await ctx.send("Prefix cleared")
+                await ctx.respond("Prefix cleared")
                 return
             else:
                 self.prfx.update_one(
                     filter={"_id": ctx.guild.id}, update={"$set": {"prfx": prefix}}
                 )
-                await ctx.send(f"Successfully set the server prefix to {prefix}")
+                await ctx.respond(f"Successfully set the server prefix to {prefix}")
                 return
 
 

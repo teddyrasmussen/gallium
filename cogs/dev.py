@@ -43,8 +43,8 @@ class dev(commands.Cog):
             goodtb = "".join(lines)
             r = await requests.post("https://hastebin.com/documents", data=goodtb)
             re = await r.json()
-            return await ctx.send(f"https://hastebin.com/{re['key']}")
-        await ctx.send(f"📥 Loaded extension **cogs/{name}.py**")
+            return await ctx.respond(f"https://hastebin.com/{re['key']}")
+        await ctx.respond(f"📥 Loaded extension **cogs/{name}.py**")
 
     @commands.is_owner()
     @commands.command(aliases=["r"])
@@ -53,7 +53,7 @@ class dev(commands.Cog):
 
         try:
             self.bot.reload_extension(f"cogs.{name}")
-            await ctx.send(f"🔁 Reloaded extension **cogs/{name}.py**")
+            await ctx.respond(f"🔁 Reloaded extension **cogs/{name}.py**")
 
         except Exception as e:
             etype = type(e)
@@ -62,7 +62,7 @@ class dev(commands.Cog):
             goodtb = "".join(lines)
             r = await requests.post("https://hastebin.com/documents", data=goodtb)
             re = await r.json()
-            return await ctx.send(f"https://hastebin.com/{re['key']}")
+            return await ctx.respond(f"https://hastebin.com/{re['key']}")
 
     @commands.is_owner()
     @commands.command()
@@ -71,9 +71,9 @@ class dev(commands.Cog):
         try:
             self.bot.unload_extension(f"cogs.{name}")
         except Exception as e:
-            return await ctx.send(f"```py\n{e}```")
+            return await ctx.respond(f"```py\n{e}```")
             log.error(e)
-        await ctx.send(f"📤 Unloaded extension **cogs/{name}.py**")
+        await ctx.respond(f"📤 Unloaded extension **cogs/{name}.py**")
 
     @commands.is_owner()
     @commands.command(aliases=["ra"])
@@ -94,18 +94,18 @@ class dev(commands.Cog):
                         "https://hastebin.com/documents", data=goodtb
                     )
                     re = await r.json()
-                    return await ctx.send(f"https://hastebin.com/{re['key']}")
+                    return await ctx.respond(f"https://hastebin.com/{re['key']}")
 
         if error_collection:
             output = "\n".join(
                 [f"**{g[0]}** ```diff\n- {g[1]}```" for g in error_collection]
             )
-            return await ctx.send(
+            return await ctx.respond(
                 f"Attempted to reload all extensions, was able to reload, "
                 f"however the following failed...\n\n{output}"
             )
 
-        return await ctx.send("Successfully reloaded all extensions")
+        return await ctx.respond("Successfully reloaded all extensions")
 
     @commands.is_owner()
     @commands.command()
@@ -113,7 +113,7 @@ class dev(commands.Cog):
         """Leave the current server."""
         embed = discord.Embed(title="Goodbye", color=self.color)
         embed.set_footer(text=self.footer)
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
         await ctx.guild.leave()
         log.info(f"Left {ctx.guild}, ID: {ctx.guild.id} at owners request.")
 
@@ -123,21 +123,21 @@ class dev(commands.Cog):
         """Change the Bot Status"""
         if type == "playing":
             await self.bot.change_presence(activity=discord.Game(name=f"{status}"))
-            await ctx.send(f"Changed status to `Playing {status}`")
+            await ctx.respond(f"Changed status to `Playing {status}`")
         elif type == "listening":
             await self.bot.change_presence(
                 activity=discord.Activity(
                     type=discord.ActivityType.listening, name=f"{status}"
                 )
             )
-            await ctx.send(f"Changed status to `Listening to {status}`")
+            await ctx.respond(f"Changed status to `Listening to {status}`")
         elif type == "watching":
             await self.bot.change_presence(
                 activity=discord.Activity(
                     type=discord.ActivityType.watching, name=f"{status}"
                 )
             )
-            await ctx.send(f"Changed status to `Watching {status}`")
+            await ctx.respond(f"Changed status to `Watching {status}`")
         elif type == "bot":
             await self.bot.change_presence(
                 activity=discord.Activity(
@@ -145,7 +145,7 @@ class dev(commands.Cog):
                     name=f"{len(self.bot.users)} users in {len(self.bot.guilds)} servers",
                 )
             )
-            await ctx.send(
+            await ctx.respond(
                 f"Changed status to `Watching {len(self.bot.users)} users in {len(self.bot.guilds)} servers`"
             )
         elif type == "competing":
@@ -154,19 +154,19 @@ class dev(commands.Cog):
                     type=discord.ActivityType.competing, name=f"{status}"
                 )
             )
-            await ctx.send(f"Changed status to `Competing in {status}`")
+            await ctx.respond(f"Changed status to `Competing in {status}`")
         elif type == "streaming":
             await self.bot.change_presence(
                 activity=discord.Streaming(
                     name=f"{status}", url="https://www.twitch.tv/elevatebot"
                 )
             )
-            await ctx.send(f"Changed status to `Streaming {status}`")
+            await ctx.respond(f"Changed status to `Streaming {status}`")
         elif type == "reset":
             await self.bot.change_presence(status=discord.Status.online)
-            await ctx.send("Reset Status")
+            await ctx.respond("Reset Status")
         else:
-            await ctx.send(
+            await ctx.respond(
                 "Type needs to be either `playing|listening|watching|streaming|competing|bot|reset`"
             )
 
@@ -182,12 +182,12 @@ class dev(commands.Cog):
             url="https://cdn.discordapp.com/emojis/726779670514630667.png?v=1"
         )
         await user.send(embed=embed)
-        await ctx.send(f"<:comment:726779670514630667> Message sent to {user}")
+        await ctx.respond(f"<:comment:726779670514630667> Message sent to {user}")
 
     @commands.is_owner()
     @commands.command(aliases=["ss"])
     async def screenshot(self, ctx, url):
-        await ctx.send("This is a slow API so it may take some time.")
+        await ctx.respond("This is a slow API so it may take some time.")
         embed = discord.Embed(title=f"Screenshot of {url}", color=self.color)
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -197,7 +197,7 @@ class dev(commands.Cog):
             embed.set_image(url="attachment://ss.png")
             embed.set_footer(text=self.footer)
 
-            await ctx.send(
+            await ctx.respond(
                 file=discord.File(io.BytesIO(res), filename="ss.png"), embed=embed
             )
 
@@ -205,7 +205,7 @@ class dev(commands.Cog):
     @commands.command()
     async def say(self, ctx, *, content: str):
         """Make the bot say something"""
-        await ctx.send(content)
+        await ctx.respond(content)
 
     @commands.is_owner()
     @commands.command(aliases=["e"])
@@ -220,15 +220,15 @@ class dev(commands.Cog):
     async def nick(self, ctx, *, name: str):
         try:
             await ctx.guild.me.edit(nick=name)
-            await ctx.send(f"Successfully changed username to **{name}**")
+            await ctx.respond(f"Successfully changed username to **{name}**")
         except discord.HTTPException as err:
-            await ctx.send(f"```{err}```")
+            await ctx.respond(f"```{err}```")
 
     @commands.command()
     @commands.is_owner()
     async def rn(self, ctx):
         await ctx.guild.me.edit(nick=None)
-        await ctx.send("Nickname reset to Gallium")
+        await ctx.respond("Nickname reset to Gallium")
 
     @commands.is_owner()
     @commands.command(aliases=["la"])
@@ -241,19 +241,19 @@ class dev(commands.Cog):
                 try:
                     self.bot.load_extension(f"cogs.{name}")
                 except Exception as e:
-                    return await ctx.send(f"```py\n{e}```")
+                    return await ctx.respond(f"```py\n{e}```")
                     log.error(e)
 
         if error_collection:
             output = "\n".join(
                 [f"**{g[0]}** ```diff\n- {g[1]}```" for g in error_collection]
             )
-            return await ctx.send(
+            return await ctx.respond(
                 f"Attempted to reload all extensions, was able to reload, "
                 f"however the following failed...\n\n{output}"
             )
 
-        await ctx.send("Successfully reloaded all extensions")
+        await ctx.respond("Successfully reloaded all extensions")
 
     @commands.command(aliases=["s"])
     @commands.is_owner()
@@ -265,7 +265,7 @@ class dev(commands.Cog):
             color=self.color,
         )
         embed.set_footer(text=self.footer)
-        msg = await ctx.send(embed=embed)
+        msg = await ctx.respond(embed=embed)
         async with ctx.channel.typing():
             sp.getoutput("git pull")
             embed = discord.Embed(
@@ -281,13 +281,13 @@ class dev(commands.Cog):
                     try:
                         self.bot.reload_extension(f"cogs.{name}")
                     except Exception as e:
-                        return await ctx.send(f"```py\n{e}```")
+                        return await ctx.respond(f"```py\n{e}```")
 
             if error_collection:
                 err = "\n".join(
                     [f"**{g[0]}** ```diff\n- {g[1]}```" for g in error_collection]
                 )
-                return await ctx.send(
+                return await ctx.respond(
                     f"Attempted to reload all extensions, was able to reload, "
                     f"however the following failed...\n\n{err}"
                 )
@@ -304,22 +304,22 @@ class dev(commands.Cog):
             Add a user to the trusted list
             doc = self.trusted.find_one({"_id": user.id})
             if doc and doc.get("trusted"):
-                await ctx.send("That user is already trusted!")
+                await ctx.respond("That user is already trusted!")
             elif doc:
                 self.trusted.update_one(
                     query={"_id": user.id},
                     update={"$set": {"trusted": True, "reason": reason}},
                 )
-                await ctx.send("I've successfully updated that user's trusted status")
+                await ctx.respond("I've successfully updated that user's trusted status")
             elif not doc:
                 self.trusted.insert_one({"_id": user.id, "trusted": True, "reason": reason})
-                await ctx.send("That user is now trusted!")
+                await ctx.respond("That user is now trusted!")
     
 
     @commands.command()
     @checks.is_trusted()
     async def trusted(self, ctx):
-        await ctx.send("You are trusted")
+        await ctx.respond("You are trusted")
     """
 
 
