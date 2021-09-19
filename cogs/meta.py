@@ -9,7 +9,7 @@ import os
 import distro
 
 
-class Gallium(discord.Cog):
+class Gallium(commands.Cog):
     """Information about Gallium"""
 
     def __init__(self, bot):
