@@ -21,7 +21,7 @@ from typing import Union
 log = logging.getLogger("titanium.cog_loader")
 
 
-class dev(discord.Cog):
+class dev(commands.Cog):
     """Developer Commands"""
 
     def __init__(self, bot):
