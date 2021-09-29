@@ -33,7 +33,7 @@ class Gallium(commands.Cog):
         """Get the invite for the bot."""
         emb = discord.Embed(
             title="Invite Gallium",
-            description="Invite me [here](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot&permissions=402713846t) with permissions, or [here](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot&permissions=0) without permissions",
+            description="Invite me [here](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot%20applications.commands&permissions=470035510) with permissions, or [here](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot%20applications.commands&permissions=0) without permissions",
             color=self.color,
         )
         emb.set_footer(text=self.footer)
@@ -58,7 +58,7 @@ class Gallium(commands.Cog):
         )
         emb.add_field(
             name=":link: Links",
-            value="[Invite Gallium](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot&permissions=402713846t)",
+            value="[Invite Gallium](https://discord.com/oauth2/authorize?client_id=888557582262886450&scope=bot%20applications.commands&permissions=470035510)",
             inline=False,
         )
         emb.set_footer(text=self.footer)
